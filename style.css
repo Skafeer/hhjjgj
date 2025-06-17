@@ -1,0 +1,561 @@
+/* style.css */
+:root {
+    --primary: #3498db;
+    --secondary: #2c3e50;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #34495e;
+    --text: #2c3e50;
+    --background: #f8f9fa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* شريط التنقل */
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i {
+    font-size: 28px;
+    color: var(--primary);
+}
+
+.logo h1 {
+    font-size: 24px;
+    color: var(--secondary);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* البانر الرئيسي */
+.hero {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.search-box {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+}
+
+.search-box button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat h3 {
+    font-size: 36px;
+    margin-bottom: 5px;
+}
+
+/* أقسام المحتوى */
+.section-title {
+    text-align: center;
+    margin: 50px 0 30px;
+    font-size: 28px;
+    color: var(--secondary);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--primary);
+}
+
+.subject-grid, .teachers-grid, .classes-grid, .lectures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+/* البطاقات */
+.subject-card, .teacher-card, .class-card, .feature-card, .lecture-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subject-card {
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.subject-card i {
+    font-size: 48px;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.subject-card h3 {
+    margin-bottom: 10px;
+    color: var(--secondary);
+}
+
+.subject-card p {
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.teachers-count {
+    background: var(--light);
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.teacher-card {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.teacher-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.teacher-avatar img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+}
+
+.teacher-info h3 {
+    margin-bottom: 5px;
+}
+
+.teacher-info p {
+    color: #777;
+}
+
+.class-card {
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.class-card i {
+    font-size: 36px;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.class-card h3 {
+    margin-bottom: 10px;
+}
+
+.lectures-count {
+    background: var(--light);
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.feature-card {
+    padding: 25px;
+    text-align: center;
+}
+
+.feature-card i {
+    font-size: 48px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+    color: var(--secondary);
+}
+
+.lecture-card {
+    display: flex;
+    padding: 15px;
+    gap: 15px;
+}
+
+.lecture-thumb {
+    flex: 0 0 100px;
+    background: var(--light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lecture-thumb i {
+    font-size: 36px;
+    color: var(--primary);
+}
+
+.lecture-content {
+    flex: 1;
+}
+
+.lecture-title {
+    margin-bottom: 10px;
+}
+
+.lecture-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    color: #777;
+}
+
+.lecture-duration {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.watch-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* أزرار العودة */
+.back-btn {
+    background: var(--light);
+    color: var(--dark);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-btn i {
+    margin-right: 5px;
+}
+
+/* تذييل الصفحة */
+footer {
+    background: var(--secondary);
+    color: white;
+    padding: 50px 0 20px;
+    margin-top: 50px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-logo {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-logo i {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.footer-logo h2 {
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.link-group {
+    min-width: 200px;
+}
+
+.link-group h3 {
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.link-group h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--primary);
+}
+
+.link-group a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.link-group a:hover {
+    color: var(--primary);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary);
+}
+
+/* مشغل الفيديو */
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.video-modal.active {
+    display: flex;
+}
+
+.video-container {
+    width: 90%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.video-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #2c3e50;
+    color: white;
+}
+
+.close-video {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.video-player {
+    width: 100%;
+    background: #000;
+}
+
+.video-player video {
+    width: 100%;
+    display: block;
+}
+
+.video-controls {
+    padding: 15px;
+    background: #f5f5f5;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-left: 10px;
+}
+
+.progress-container {
+    height: 5px;
+    background: #ddd;
+    margin-top: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #3498db;
+    width: 0%;
+}
+
+.progress-time {
+    position: absolute;
+    top: -25px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 3px 5px;
+    border-radius: 3px;
+    display: none;
+}
+
+.progress-container:hover .progress-time {
+    display: block;
+}
+
+/* نتائج البحث */
+.no-results {
+    text-align: center;
+    padding: 50px 0;
+    color: #777;
+}

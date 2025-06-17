@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أيون أكاديمي - المنصة التعليمية المتكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <style>
+        /* أنماط إضافية لتحسين تجربة المستخدم */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .video-modal.active {
+            display: flex;
+        }
+        
+        .video-container {
+            width: 90%;
+            max-width: 900px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .close-video {
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        .video-player {
+            width: 100%;
+            background: #000;
+        }
+        
+        .video-player video {
+            width: 100%;
+            display: block;
+        }
+        
+        .video-controls {
+            padding: 15px;
+            background: #f5f5f5;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .control-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .control-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-left: 10px;
+        }
+        
+        .progress-container {
+            height: 5px;
+            background: #ddd;
+            margin-top: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #3498db;
+            width: 0%;
+        }
+        
+        .progress-time {
+            position: absolute;
+            top: -25px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 5px;
+            border-radius: 3px;
+            display: none;
+        }
+        
+        .progress-container:hover .progress-time {
+            display: block;
+        }
+        
+        /* تحسينات للواجهة العربية */
+        .subject-card, .teacher-card, .class-card, .lecture-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .subject-card:hover, .teacher-card:hover, .class-card:hover, .lecture-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .watch-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .watch-btn:hover {
+            background: #2980b9;
+        }
+        
+        /* تحسينات للقائمة المتنقلة */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+                <h1>أيون أكاديمي</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">الرئيسية</a>
+                <a href="#" id="nav-teachers">المعلمين</a>
+                <a href="#" id="nav-classes">الفصول</a>
+                <a href="#">تواصل معنا</a>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم البانر الرئيسي -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>التميز التعليمي في متناول يديك</h2>
+                <p>انضم إلى منصة أيون أكاديمي لتجربة تعليمية فريدة مع أفضل المعلمين وأحدث المناهج التعليمية</p>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="ابحث عن محاضرة أو معلم...">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <h3>350+</h3>
+                        <p>محاضرة</p>
+                    </div>
+                    <div class="stat">
+                        <h3>14</h3>
+                        <p>مدرس متخصص</p>
+                    </div>
+                    <div class="stat">
+                        <h3>20+</h3>
+                        <p>مادة دراسية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوى الصفحة الرئيسية -->
+    <main class="container">
+        <!-- قسم المواد الدراسية -->
+        <section class="subjects" id="subjects-section">
+            <h2 class="section-title">المواد الدراسية</h2>
+            <div class="subject-grid" id="subjects-container">
+                <!-- سيتم ملء هذا القسم بالبيانات من ملف app.js -->
+            </div>
+        </section>
+
+        <!-- قسم المعلمين حسب المادة -->
+        <section class="teachers-section" id="teachers-section">
+            <h2 class="section-title" id="subject-title">معلمو مادة الفيزياء</h2>
+            <button class="back-btn" id="back-to-subjects">
+                <i class="fas fa-arrow-left"></i> العودة إلى المواد الدراسية
+            </button>
+            <div class="teachers-grid" id="teachers-container">
+                <!-- سيتم ملء هذا القسم بالبيانات من ملف data.js -->
+            </div>
+        </section>
+
+        <!-- قسم الفصول الدراسية -->
+        <section class="classes-section" id="classes-section">
+            <h2 class="section-title" id="teacher-title">فصول الأستاذ أحمد النعيمي</h2>
+            <button class="back-btn" id="back-to-teachers">
+                <i class="fas fa-arrow-left"></i> العودة إلى المعلمين
+            </button>
+            <div class="classes-grid" id="classes-container">
+                <!-- سيتم ملء هذا القسم بالبيانات من ملف data.js -->
+            </div>
+        </section>
+
+        <!-- قسم المحاضرات -->
+        <section class="lectures-section" id="lectures-section">
+            <h2 class="section-title" id="class-title">المحاضرات - الفصل الأول: المتسعات</h2>
+            <button class="back-btn" id="back-to-classes">
+                <i class="fas fa-arrow-left"></i> العودة إلى الفصول
+            </button>
+            <div class="lectures-grid" id="lectures-container">
+                <!-- سيتم ملء هذا القسم بالبيانات من ملف data.js -->
+            </div>
+        </section>
+
+        <!-- قسم ميزات المنصة -->
+        <section class="features" id="features-section">
+            <h2 class="section-title">لماذا أيون أكاديمي؟</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-video"></i>
+                    <h3>محاضرات عالية الجودة</h3>
+                    <p>محاضرات مسجلة بدقة عالية مع شرح وافٍ للمفاهيم</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>معلمون متخصصون</h3>
+                    <p>فريق من أفضل المعلمين ذوي الخبرة في المجال التعليمي</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>تحديث مستمر</h3>
+                    <p>إضافة محاضرات ومواد جديدة باستمرار لتواكب التطورات</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>دعم فني متكامل</h3>
+                    <p>فريق دعم فني متاح على مدار الساعة لمساعدتك</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- مشغل الفيديو -->
+    <div class="video-modal" id="video-modal">
+        <div class="video-container">
+            <div class="video-header">
+                <div class="video-title" id="video-title">المحاضرة التعريفية</div>
+                <div class="close-video" id="close-video">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="video-player">
+                <video id="lecture-video" controls playsinline>
+                    <!-- سيتم تعيين المصدر ديناميكيًا -->
+                </video>
+            </div>
+            <div class="video-controls">
+                <div class="control-group">
+                    <button class="control-btn" id="play-pause-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="control-btn" id="rewind-btn">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="control-btn" id="forward-btn">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <span class="control-label">السرعة:</span>
+                    <select class="control-select" id="speed-select">
+                        <option value="0.5">0.5x</option>
+                        <option value="0.75">0.75x</option>
+                        <option value="1" selected>1x (عادية)</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2">2x</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <span class="control-label">الجودة:</span>
+                    <select class="control-select" id="quality-select">
+                        <option value="auto" selected>تلقائية</option>
+                        <option value="360">360p</option>
+                        <option value="480">480p</option>
+                        <option value="720">720p (HD)</option>
+                        <option value="1080">1080p (Full HD)</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <button class="control-btn" id="volume-btn">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1" class="control-select">
+                </div>
+                
+                <div class="control-group">
+                    <button class="control-btn" id="fullscreen-btn">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="control-btn" id="close-btn">
+                        <i class="fas fa-times"></i> إغلاق
+                    </button>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <div class="progress-time" id="progress-time">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-atom"></i>
+                    <h2>أيون أكاديمي</h2>
+                    <p>التميز التعليمي في متناول يديك</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h3>روابط سريعة</h3>
+                        <a href="#">الرئيسية</a>
+                        <a href="#">المحاضرات</a>
+                        <a href="#">المعلمين</a>
+                        <a href="#">الفصول</a>
+                    </div>
+                    <div class="link-group">
+                        <h3>المواد الدراسية</h3>
+                        <a href="#">الرياضيات</a>
+                        <a href="#">الفيزياء</a>
+                        <a href="#">الكيمياء</a>
+                        <a href="#">الأحياء</a>
+                    </div>
+                    <div class="link-group">
+                        <h3>تواصل معنا</h3>
+                        <a href="#">الدعم الفني</a>
+                        <a href="#">الأسئلة الشائعة</a>
+                        <a href="#">سياسة الخصوصية</a>
+                        <a href="#">الشروط والأحكام</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 أيون أكاديمي. جميع الحقوق محفوظة.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- استدعاء ملف البيانات -->
+    <script src="data.js"></script>
+    
+    <!-- استدعاء مكتبة HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.3/dist/hls.min.js"></script>
+    
+    <!-- الكود الرئيسي -->
+    <script src="app.js"></script>
+</body>
+</html>
